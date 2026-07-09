@@ -107,6 +107,10 @@ sudo systemctl start kiln.service
 
 Access the interface by typing the Raspberry Pi's IP address into the web browser of any device on the same Wi-Fi network (e.g., `[http://192.168.1.110](http://192.168.1.110)`).
 
+<img width="1443" height="817" alt="kiln" src="https://github.com/user-attachments/assets/c54b79d1-0082-45cf-bd07-250fdea68415" />
+
+<img width="661" height="424" alt="graph" src="https://github.com/user-attachments/assets/2c860cee-62e7-409e-8c72-0371e6835f01" />
+
 ### The Run Card (Monitoring & Control)
 
 This card gives you real-time insight into the physical state of the kiln.
