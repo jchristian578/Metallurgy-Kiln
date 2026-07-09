@@ -1,0 +1,14 @@
+{
+  "name": "Forging 900C 12 Hour",
+  "meta": {
+    "entryTemp": "C",
+    "entryTime": "min"
+  },
+  "steps": [
+    {
+      "time": 720.0,
+      "temp": 900,
+      "rate": 0
+    }
+  ]
+}

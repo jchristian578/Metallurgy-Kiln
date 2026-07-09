@@ -1,0 +1,14 @@
+{
+  "name": "HT 805C - 26C3",
+  "meta": {
+    "entryTemp": "C",
+    "entryTime": "min"
+  },
+  "steps": [
+    {
+      "time": 40.0,
+      "temp": 805,
+      "rate": 0
+    }
+  ]
+}

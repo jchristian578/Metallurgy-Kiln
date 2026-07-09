@@ -1,0 +1,29 @@
+{
+  "name": "Kastolite 30",
+  "meta": {
+    "entryTemp": "C",
+    "entryTime": "min"
+  },
+  "steps": [
+    {
+      "time": 20.0,
+      "temp": 90,
+      "rate": 3.5
+    },
+    {
+      "time": 40.25,
+      "temp": 90,
+      "rate": 0
+    },
+    {
+      "time": 39.75,
+      "temp": 100,
+      "rate": 0.25
+    },
+    {
+      "time": 61.0,
+      "temp": 110,
+      "rate": 0.16
+    }
+  ]
+}

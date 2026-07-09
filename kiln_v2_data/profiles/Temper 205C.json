@@ -1,0 +1,14 @@
+{
+  "name": "Temper 205C",
+  "meta": {
+    "entryTemp": "C",
+    "entryTime": "min"
+  },
+  "steps": [
+    {
+      "time": 120.0,
+      "temp": 205,
+      "rate": 0
+    }
+  ]
+}

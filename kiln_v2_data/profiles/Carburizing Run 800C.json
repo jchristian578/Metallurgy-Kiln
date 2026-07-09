@@ -1,0 +1,29 @@
+{
+  "name": "Carburizing Run 800C",
+  "meta": {
+    "entryTemp": "C",
+    "entryTime": "min"
+  },
+  "steps": [
+    {
+      "time": 30.0,
+      "temp": 650,
+      "rate": -5.0
+    },
+    {
+      "time": 30.0,
+      "temp": 800,
+      "rate": 5.0
+    },
+    {
+      "time": 30.0,
+      "temp": 700,
+      "rate": -3.33
+    },
+    {
+      "time": 210.0,
+      "temp": 700,
+      "rate": 0
+    }
+  ]
+}

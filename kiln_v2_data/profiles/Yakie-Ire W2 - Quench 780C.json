@@ -1,0 +1,29 @@
+{
+  "name": "Yakie-Ire W2 - Quench 780C",
+  "meta": {
+    "entryTemp": "C",
+    "entryTime": "min"
+  },
+  "steps": [
+    {
+      "time": 2.0,
+      "temp": 650,
+      "rate": 260.0
+    },
+    {
+      "time": 10.0,
+      "temp": 650,
+      "rate": 0
+    },
+    {
+      "time": 1.0,
+      "temp": 780,
+      "rate": 130.0
+    },
+    {
+      "time": 10.0,
+      "temp": 780,
+      "rate": 0
+    }
+  ]
+}

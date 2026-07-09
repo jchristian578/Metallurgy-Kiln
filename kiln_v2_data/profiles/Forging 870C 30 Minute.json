@@ -1,0 +1,14 @@
+{
+  "name": "Forging 870C 30 Minute",
+  "meta": {
+    "entryTemp": "C",
+    "entryTime": "min"
+  },
+  "steps": [
+    {
+      "time": 40.0,
+      "temp": 870,
+      "rate": 0
+    }
+  ]
+}

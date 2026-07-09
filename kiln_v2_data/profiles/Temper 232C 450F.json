@@ -1,0 +1,19 @@
+{
+  "name": "Temper 232C 450F",
+  "meta": {
+    "entryTemp": "C",
+    "entryTime": "min"
+  },
+  "steps": [
+    {
+      "time": 10.0,
+      "temp": 232,
+      "rate": 19.7
+    },
+    {
+      "time": 120.25,
+      "temp": 232,
+      "rate": 0
+    }
+  ]
+}

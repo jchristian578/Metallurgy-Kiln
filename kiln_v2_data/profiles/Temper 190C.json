@@ -1,0 +1,28 @@
+{
+  "name": "Temper 190C",
+  "meta": {
+    "entryTemp": "C",
+    "entryTime": "hr"
+  },
+  "steps": [
+    {
+      "time": 2,
+      "temp": 190,
+      "rate": 0
+    }
+  ],
+  "compiled_steps": [
+    {
+      "kind": "ramp",
+      "target_c": 190,
+      "rate_c_per_min": 0,
+      "duration_sec": 0
+    },
+    {
+      "kind": "soak",
+      "target_c": 190,
+      "duration_sec": 7200,
+      "rate_c_per_min": 0
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+Based on the code files (`server.py`, `kiln-buttons.py`, `kiln/lcd.py`) and the hardware configuration discussed, here are the required dependencies.
+
+You should run these commands on your Raspberry Pi.
+
+### 1. System Level Dependencies
+
+These are required for I2C communication (LCD) and GPIO access.
+
+```bash
+sudo apt update
+sudo apt install -y python3-smbus i2c-tools python3-dev python3-pip
+
+```
+
+### 2. Python Libraries
+
+These are the specific Python packages imported in your scripts.
+
+**Core Web Server & API (`server.py`):**
+
+```bash
+sudo pip3 install fastapi uvicorn[standard] pydantic requests
+
+```
+
+**Hardware & Sensors (`kiln/controller.py`, `kiln-buttons.py`):**
+
+* `RPi.GPIO`: For the relays and physical buttons.
+* `adafruit-circuitpython-max31856`: For the thermocouple amplifier.
+* `adafruit-blinka`: Required to provide `board`, `busio`, and `digitalio` support.
+
+```bash
+sudo pip3 install RPi.GPIO adafruit-circuitpython-max31856 adafruit-blinka
+
+```
+
+**LCD Display (`kiln/lcd.py`):**
+
+```bash
+sudo pip3 install RPLCD smbus2
+
+```
+
+### Summary Single Command
+
+To install everything at once:
+
+```bash
+sudo pip3 install fastapi uvicorn[standard] pydantic requests RPi.GPIO adafruit-circuitpython-max31856 adafruit-blinka RPLCD smbus2
+
+```
+
+### Verification
+
+After installing, you can verify the I2C devices (like the LCD) are detected by running:
+
+```bash
+sudo i2cdetect -y 1
+
+```
+
+*(You should see a number like `27` or `3f` in the grid).*

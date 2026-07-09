@@ -1,0 +1,19 @@
+{
+  "name": "Yakie-Ire W2 - Clay Drying 130C",
+  "meta": {
+    "entryTemp": "C",
+    "entryTime": "min"
+  },
+  "steps": [
+    {
+      "time": 10.0,
+      "temp": 130,
+      "rate": 9.0
+    },
+    {
+      "time": 20.0,
+      "temp": 130,
+      "rate": 0
+    }
+  ]
+}

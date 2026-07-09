@@ -1,0 +1,14 @@
+[Unit]
+Description=Kiln Physical Buttons
+After=kilncontroller.service
+
+[Service]
+User=jchristian
+Group=jchristian
+WorkingDirectory=/home/jchristian/MetallurgyKiln
+ExecStart=sudo /usr/local/bin/python3.11 /home/jchristian/MetallurgyKiln/helpers/kiln-buttons.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

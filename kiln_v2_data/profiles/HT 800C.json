@@ -1,0 +1,14 @@
+{
+  "name": "HT 800C",
+  "meta": {
+    "entryTemp": "C",
+    "entryTime": "min"
+  },
+  "steps": [
+    {
+      "time": 360.0,
+      "temp": 800,
+      "rate": 0
+    }
+  ]
+}

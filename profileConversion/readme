@@ -1,0 +1,101 @@
+-------------------------------------------------------------------
+------------------- Metallurgy Kiln Controller --------------------
+-------------------------------------------------------------------
+----------------------- By: Jacob Christian -----------------------
+----------------------- Besslen Bladewords ------------------------
+-------------------------------------------------------------------
+---------------- https://www.WootzSmithForum.com/ -----------------
+---------- https://www.instagram.com/besslenbladeworks/ -----------
+----------- https://www.youtube.com/@besslenbladeworks ------------
+----------------- V2 Completed January 3rd, 2026 ------------------
+-------------------------------------------------------------------
+
+
+# Profile Conversion Tool (V1 → V2)
+
+This tool converts legacy kiln profiles (timestamp/temperature pairs) into the new V2 format (Step-based Ramp/Soak logic).
+
+### 📂 Directory Structure
+
+Ensure your folder is set up exactly like this:
+
+```text
+profileConversion/
+├── convert_profiles.py     # The conversion script
+├── oldProfiles/            # 📥 INPUT: Place your old .json files here
+└── profiles/               # 📤 OUTPUT: Converted files will appear here
+
+```
+
+### ⚙️ Setup
+
+Before running the script, ensure the configuration variables inside `convert_profiles.py` match your folder names.
+
+1. Open `convert_profiles.py`.
+2. Look for the **CONFIG** section at the top.
+3. Update the `INPUT_DIR` to match your folder name (`oldProfiles`):
+
+```python
+# --- CONFIG ---
+INPUT_DIR = "./oldProfiles"    # Changed from "./old_profiles"
+OUTPUT_DIR = "./profiles"      # Where the new V2 files go
+
+```
+
+### 🚀 How to Run
+
+1. **Place Files:** Copy all your old `.json` profile files into the `oldProfiles/` folder.
+2. **Open Terminal:** Navigate to the `profileConversion` directory:
+```bash
+cd ~/kiln_controller/profileConversion
+
+```
+
+
+3. **Run Script:**
+```bash
+python3 convert_profiles.py
+
+```
+
+
+4. **Check Output:** Your new profiles will be generated in the `profiles/` folder.
+
+### 🔄 What Changes?
+
+**Old Format (V1)**
+*Basic list of coordinates.*
+
+```json
+{
+  "name": "780 Forging",
+  "data": [
+    [0, 780],
+    [14400, 780]
+  ]
+}
+
+```
+
+**New Format (V2)**
+*Calculated segments with explicit time (minutes) and rate.*
+
+```json
+{
+  "name": "780 Forging",
+  "meta": { "entryTemp": "C", "entryTime": "min" },
+  "steps": [
+    {
+      "time": 240.0,
+      "temp": 780,
+      "rate": 0
+    }
+  ]
+}
+
+```
+
+### ⚠️ Troubleshooting
+
+* **"Input directory not found":** Make sure the folder name in the script (`INPUT_DIR`) matches the actual folder name exactly (case-sensitive).
+* **"Skipping file":** The script skips files that don't have the `"data"` key or strictly follow the old format to prevent errors.

@@ -1,0 +1,31 @@
+{
+  "version": 3,
+  "ts": 1783613963,
+  "running": false,
+  "name": "Temper 200C",
+  "kiln_elapsed_sec": 0.0,
+  "total_elapsed_sec": 0.0,
+  "last_sp": 200.0,
+  "schedule": {
+    "steps": [
+      {
+        "kind": "soak",
+        "target_c": 57.42,
+        "duration_sec": 0,
+        "rate_c_per_min": 0.0
+      },
+      {
+        "kind": "ramp",
+        "target_c": 200.0,
+        "duration_sec": 0,
+        "rate_c_per_min": 0.0
+      },
+      {
+        "kind": "soak",
+        "target_c": 200.0,
+        "duration_sec": 7200,
+        "rate_c_per_min": 0.0
+      }
+    ]
+  }
+}

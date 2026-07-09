@@ -1,0 +1,118 @@
+## Installation Guide
+
+This guide covers setting up the Kiln Watcher (`watcher.py`), an independent safety script that monitors your main kiln controller and sends push notifications to your phone.
+
+### Phase 1: Push Notification Setup (Pushover)
+
+The watcher uses Pushover to deliver real-time alerts to your mobile device.
+
+1. Download the **Pushover** app on your iOS or Android device and create an account.
+2. Log in to the Pushover dashboard on your computer.
+3. Locate your **User Key** on the main dashboard screen.
+4. Scroll down and click **Create an Application/API Token**. Name it "Kiln Watcher" and save. You will be given an **API Token/Key**.
+
+### Phase 2: Software Dependencies
+
+The watcher requires the `requests` library to talk to both the main kiln server and the Pushover API.
+
+```bash
+sudo python3.11 -m pip install requests --break-system-packages
+
+```
+
+### Phase 3: Configuration
+
+You must link your Pushover account to the script and verify your safety thresholds.
+
+1. Open the watcher script (or your `config.py` if you moved the keys there).
+```bash
+nano ~/MetallurgyKiln/watcher.py
+
+```
+
+
+2. Locate the API configuration block and insert the keys you generated in Phase 1:
+```python
+API_KEY = "your_application_api_token_here"
+USER_KEY = "your_user_key_here"
+
+```
+
+
+3. Open `config.py` to verify the watcher safety thresholds:
+```bash
+nano ~/MetallurgyKiln/config.py
+
+```
+
+
+4. Check the following variables:
+* `WATCHER_POLL_INTERVAL_SEC`: How often (in seconds) it checks the kiln (default is usually 5.0).
+* `WATCHER_RUNAWAY_DELTA_C`: The temperature gap before a runaway alarm triggers (default is 30.0).
+
+
+
+### Phase 4: Run on Boot (Systemd Service)
+
+Just like the main controller, the watcher should run automatically in the background.
+
+1. Create a new service file:
+```bash
+sudo nano /etc/systemd/system/kiln-watcher.service
+
+```
+
+
+2. Paste the following configuration (adjusting the paths for your username):
+```ini
+[Unit]
+Description=Metallurgy Kiln Watcher
+After=kiln.service
+
+[Service]
+User=pi
+WorkingDirectory=/home/pi/MetallurgyKiln
+ExecStart=/usr/bin/python3.11 /home/pi/MetallurgyKiln/watcher.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+
+```
+
+
+3. Enable and start the service:
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable kiln-watcher.service
+sudo systemctl start kiln-watcher.service
+
+```
+
+
+
+---
+
+## User Guide
+
+The Kiln Watcher is a "watchdog" program. It sits quietly in the background and asks the main controller for a status update every 5 seconds. If it detects a major event or a dangerous condition, it instantly sends a push notification to your phone.
+
+### Standard Notifications
+
+The watcher keeps you informed of your firing progress without requiring you to constantly check the web UI.
+
+* ⚡ **POWER RESTORED:** Sent when the watcher first boots up. If you receive this randomly, your house or shop experienced a power outage.
+* 🔥 **STARTED:** Sent when a profile begins running.
+* 🎯 **TARGET REACHED:** Sent when a heating ramp finishes and the actual temperature lands within 3°C of the requested Setpoint.
+* ✅ **ENDED:** Sent when a profile completes or is manually aborted. It includes the total run duration and the maximum temperature reached.
+* 🔄 **AUTO-RESUMED:** Sent if the main controller recovers from a power loss and automatically restarts the firing schedule.
+
+### Safety Alarms & Interlocks
+
+The watcher acts as a secondary layer of logic to detect hardware failures that the main controller might not catch.
+
+* 🌋 **RUNAWAY DETECTED (Alert):** Triggers if the physical temperature rises dangerously above your Setpoint (default is 30°C over). This usually means a Solid State Relay has failed in the "Closed/ON" position.
+* ❄️ **RUNAWAY CLEARED:** Sent if the runaway temperature falls back into a safe range, letting you know the danger has passed.
+* 🔌 **OPEN LOOP DETECTED (Alert):** Triggers if the controller is commanding 95% to 100% power for 5 continuous minutes, but the temperature has risen less than 3°C. This indicates either a broken heating element or a thermocouple that has slipped out of the kiln chamber.
+* 🚨 **SYSTEM ERROR (Alert):** Triggers if the main controller reports a hardware fault, such as a disconnected or short-circuited thermocouple sensor.

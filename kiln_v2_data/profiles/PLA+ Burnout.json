@@ -1,0 +1,19 @@
+{
+  "name": "PLA+ Burnout",
+  "meta": {
+    "entryTemp": "C",
+    "entryTime": "min"
+  },
+  "steps": [
+    {
+      "time": 150.0,
+      "temp": 500,
+      "rate": 3.13
+    },
+    {
+      "time": 30.0,
+      "temp": 500,
+      "rate": 0
+    }
+  ]
+}

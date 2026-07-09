@@ -1,0 +1,29 @@
+{
+  "name": "GirTech Firing",
+  "meta": {
+    "entryTemp": "C",
+    "entryTime": "min"
+  },
+  "steps": [
+    {
+      "time": 60.0,
+      "temp": 110,
+      "rate": 1.83
+    },
+    {
+      "time": 120.0,
+      "temp": 110,
+      "rate": 0
+    },
+    {
+      "time": 360.0,
+      "temp": 1299,
+      "rate": 3.3
+    },
+    {
+      "time": 120.0,
+      "temp": 1299,
+      "rate": 0
+    }
+  ]
+}

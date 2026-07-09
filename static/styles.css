@@ -1,0 +1,181 @@
+/*style.css — Metallurgy Kiln Controller V2
+
+-------------------------------------------------------------------
+------------------- Metallurgy Kiln Controller --------------------
+-------------------------------------------------------------------
+----------------------- By: Jacob Christian -----------------------
+----------------------- Besslen Bladewords ------------------------
+-------------------------------------------------------------------
+---------------- https://www.WootzSmithForum.com/ -----------------
+---------- https://www.instagram.com/besslenbladeworks/ -----------
+----------- https://www.youtube.com/@besslenbladeworks ------------
+----------------- V2 Completed January 3rd, 2026 ------------------
+-------------------------------------------------------------------
+
+*/
+
+body { --bs-body-bg: #111; --bs-body-color: #f1f1f1; }
+.card { background-color: #1b1b1b; border: 1px solid #2a2a2a; }
+.tile { background:#121212; border-radius: 16px; padding: 8px 10px; border:1px solid #2a2a2a; }
+.tile-label { font-size: .8rem; color:#aaa; }
+.tile-value { font-size: 1.4rem; font-weight: 600; }
+#steps .step-row { border-bottom: 1px dashed #2a2a2a; padding: 6px 0; }
+#steps input { background:#111; color:#fff;border:1px solid #333; }
+.btn-outline-light.active { background:#e9ecef; color:#111; }
+
+/* Mobile-friendly tweaks */
+@media (max-width: 576px){
+  .btn-group-sm .btn { padding: .5rem .75rem; font-size: .95rem; }
+  .tile-value { font-size: 1.2rem; }
+  .card-body { padding: .75rem; }
+}
+
+/* ---- Graph row clamp (prevents .row.g-2.mt-2 from growing) ---- */
+#chart {
+  display: block;
+  width: 100% !important;
+  height: 320px !important;            /* mobile default */
+}
+@media (min-width: 768px){
+  #chart { height: 420px !important; }  /* tablet/desktop */
+}
+@media (min-width: 1200px){
+  #chart { height: 520px !important; }  /* large screens */
+}
+
+/* If that exact row is your chart area, keep it tidy */
+.row.g-2.mt-2 {
+  overflow: hidden;
+}
+
+#graphRow { overflow: hidden; }
+
+/* ---- Run badge + animation ---- */
+#runBadge{display:inline-flex;align-items:center;gap:.4rem;padding:.25rem .5rem;border-radius:.5rem;}
+.badge-idle{background:#6c757d;color:#fff;}
+.badge-run{background:#198754;color:#fff;}
+.run-dot{width:10px;height:10px;border-radius:50%;background:#1ecb4f;box-shadow:0 0 0 rgba(30,203,79,.6);animation:pulse 1.4s ease-in-out infinite;}
+.hidden{display:none!important;}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(30,203,79,.6);transform:scale(1)}
+  70%{box-shadow:0 0 0 10px rgba(30,203,79,0);transform:scale(1.05)}
+  100%{box-shadow:0 0 0 0 rgba(30,203,79,0);transform:scale(1)}
+}
+@media (prefers-reduced-motion: reduce){ .run-dot{animation:none;} }
+
+.d-none { display: none !important; }
+
+.card-text-wht { color:#8ec6ff };
+
+/* Pretty profile-name input (dark theme) */
+.name-input .input-group-text{
+  background:#0dcaf0;           /* info */
+  color:#0b1b1f;                 /* readable on cyan */
+  border:none;
+  font-weight:600;
+  border-top-left-radius:9999px;
+  border-bottom-left-radius:9999px;
+}
+.name-input .form-control{
+  background:#15171b;
+  color:#fff;
+  border:1px solid rgba(255,255,255,.12);
+  border-left:0;
+  border-top-right-radius:9999px;
+  border-bottom-right-radius:9999px;
+  border-top-left-radius:9999px;
+  border-bottom-left-radius:9999px;
+}
+.name-input .form-control::placeholder{ color:#8792a2; }
+.name-input .form-control:focus{
+  border-color:#0dcaf0;
+  box-shadow:0 0 0 .2rem rgba(13,202,240,.15);
+}
+
+/* ---------- Modal overlay + panel (custom, not Bootstrap JS) ---------- */
+body .modal-backdrop{
+  position: fixed;
+  inset: 0;
+  display: none;                   /* toggled by .show */
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,.65);     /* translucent backdrop */
+  backdrop-filter: blur(2px);
+  z-index: 1055;                   /* above cards */
+  pointer-events: none;            /* disabled when hidden */
+}
+body .modal-backdrop.show{
+  display: flex;
+  pointer-events: all;             /* clickable when shown */
+}
+
+body .modal-card{
+  background: #121316;             /* SOLID panel */
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: .75rem;
+  width: min(92vw, 520px);
+  padding: 1rem 1.25rem;
+  box-shadow: 0 14px 40px rgba(0,0,0,.55);
+}
+
+body .modal-card .btn{ border-radius: .6rem; }
+body.modal-open{ overflow: hidden; }  /* prevent page scroll when modal is open */
+
+/* nice, subtle motion (respects reduced-motion) */
+@media (prefers-reduced-motion: no-preference){
+  body .modal-backdrop.show{ animation: modalFadeIn .15s ease-out both; }
+  body .modal-card{ animation: modalPopIn .18s cubic-bezier(.2,.7,.2,1) both; }
+}
+@keyframes modalFadeIn{ from{opacity:0} to{opacity:1} }
+@keyframes modalPopIn{ from{transform:translateY(8px);opacity:.96} to{transform:none;opacity:1} }
+
+/* Optional: emphasize fields inside Run Summary */
+#runModal .modal-card strong { color:#8ec6ff; }
+
+/* Make the overlay opaque to its children; keep the dim background via bg color */
+.modal-backdrop { opacity: 1 !important; }
+.modal-backdrop.show { opacity: 1 !important; background-color: rgba(0,0,0,.65) !important; }
+
+/* Ensure the panel itself is fully solid */
+.modal-card { background-color: #121316 !important; }
+
+/* --- Custom Modal (no Bootstrap JS) --- */
+.xmodal-backdrop{
+  position: fixed; inset: 0;
+  display: none; align-items: center; justify-content: center;
+  background: rgba(0,0,0,.65);
+  backdrop-filter: blur(2px);
+  z-index: 1055;
+  pointer-events: none;
+}
+.xmodal-backdrop.show{ display:flex; pointer-events: all; }
+.xmodal-card{
+  background: #121316;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: .75rem;
+  width: min(92vw, 520px);
+  padding: 1rem 1.25rem;
+  box-shadow: 0 14px 40px rgba(0,0,0,.55);
+}
+body.modal-open{ overflow:hidden; }
+@media (prefers-reduced-motion:no-preference){
+  .xmodal-backdrop.show{ animation: modalFadeIn .15s ease-out both; }
+  .xmodal-card{ animation: modalPopIn .18s cubic-bezier(.2,.7,.2,1) both; }
+}
+@keyframes modalFadeIn{ from{opacity:0} to{opacity:1} }
+@keyframes modalPopIn{ from{transform:translateY(8px);opacity:.96} to{transform:none;opacity:1} }
+#runModal .xmodal-card strong { color:#8ec6ff; }
+
+/* Historical Runs Card */
+/* Sticky table headers for scrollable tables */
+.table-responsive thead th {
+  position: sticky;
+  top: 0;
+  background-color: #212529; /* Matches Bootstrap's table-dark background */
+  z-index: 1;
+  
+  /* Optional: Adds a subtle border line below the sticky header */
+  box-shadow: 0 2px 0 rgba(255, 255, 255, 0.1); 
+}

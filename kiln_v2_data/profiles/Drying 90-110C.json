@@ -1,0 +1,24 @@
+{
+  "name": "Drying 90-110C",
+  "meta": {
+    "entryTemp": "C",
+    "entryTime": "min"
+  },
+  "steps": [
+    {
+      "time": 30.0,
+      "temp": 90,
+      "rate": 0
+    },
+    {
+      "time": 10.0,
+      "temp": 110,
+      "rate": 2.0
+    },
+    {
+      "time": 10.0,
+      "temp": 150,
+      "rate": 4.0
+    }
+  ]
+}

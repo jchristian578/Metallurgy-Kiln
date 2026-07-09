@@ -1,0 +1,39 @@
+{
+  "name": "Prestige Oro Burnout",
+  "meta": {
+    "entryTemp": "C",
+    "entryTime": "min"
+  },
+  "steps": [
+    {
+      "time": 60.0,
+      "temp": 150,
+      "rate": 2.5
+    },
+    {
+      "time": 180.0,
+      "temp": 150,
+      "rate": 0
+    },
+    {
+      "time": 60.0,
+      "temp": 370,
+      "rate": 3.67
+    },
+    {
+      "time": 120.0,
+      "temp": 370,
+      "rate": 0
+    },
+    {
+      "time": 120.0,
+      "temp": 750,
+      "rate": 3.17
+    },
+    {
+      "time": 240.0,
+      "temp": 750,
+      "rate": 0
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "HT 820C",
+  "meta": {
+    "entryTemp": "C",
+    "entryTime": "min"
+  },
+  "steps": [
+    {
+      "time": 60.0,
+      "temp": 815,
+      "rate": 0
+    }
+  ]
+}

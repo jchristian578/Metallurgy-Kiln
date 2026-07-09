@@ -1,0 +1,14 @@
+{
+  "name": "Clay Drying 30-110C",
+  "meta": {
+    "entryTemp": "C",
+    "entryTime": "min"
+  },
+  "steps": [
+    {
+      "time": 60.0,
+      "temp": 110,
+      "rate": 1.33
+    }
+  ]
+}

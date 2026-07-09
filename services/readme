@@ -1,0 +1,141 @@
+-------------------------------------------------------------------
+------------------- Metallurgy Kiln Controller --------------------
+-------------------------------------------------------------------
+----------------------- By: Jacob Christian -----------------------
+----------------------- Besslen Bladewords ------------------------
+-------------------------------------------------------------------
+---------------- https://www.WootzSmithForum.com/ -----------------
+---------- https://www.instagram.com/besslenbladeworks/ -----------
+----------- https://www.youtube.com/@besslenbladeworks ------------
+----------------- V2 Completed January 3rd, 2026 ------------------
+-------------------------------------------------------------------
+
+Kiln Buttons Service
+sudo systemctl daemon-reload
+sudo systemctl enable kilnbuttons
+sudo systemctl start kilnbuttons
+
+controller.service
+sudo systemctl daemon-reload
+sudo systemctl enable kilncontroller
+sudo systemctl start kilncontroller
+
+watcher.service
+sudo systemctl enable kilnwatcher
+sudo systemctl start kilnwatcher
+
+# Metallurgy Kiln - System Services
+
+This system relies on three separate `systemd` services to manage the kiln hardware, the web API, and safety monitoring.
+
+## 📂 Service Overview
+
+### 1. `kilncontroller.service` (The Core)
+
+* **Description:** The main application server. This runs the FastAPI/Flask web server and manages the primary control loop (PID logic, Temperature reading).
+* **File:** `serer.py` (Note: ensure filename matches actual script, likely `server.py`)
+* **Dependencies:** Waits for `network.target` (WiFi/Ethernet) before starting.
+* **Restart Policy:** Restarts after 5 seconds if it crashes.
+
+### 2. `kilnbuttons.service` (Hardware Interface)
+
+* **Description:** Monitors the physical GPIO buttons (Stop/Restart) on the kiln chassis.
+* **File:** `helpers/kiln-buttons.py`
+* **Dependencies:** Waits for `kilncontroller.service` to be active. This ensures the API is ready to receive commands when a button is pressed.
+
+### 3. `kilnwatcher.service` (Safety & Notifications)
+
+* **Description:** A separate watchdog process. It monitors the kiln's status, handles logging, or sends notifications (Discord/SMS) if parameters go out of bounds.
+* **File:** `helpers/kiln-watcher.py`
+* **Dependencies:** Waits for `kilncontroller.service`.
+
+---
+
+## 🛠️ Installation Instructions
+
+### 1. Naming the Files
+
+It is critical that the files are named exactly as follows, because the "Buttons" and "Watcher" services specifically look for `kilncontroller.service` to be running first.
+
+* Save the **Controller** config as: `/etc/systemd/system/kilncontroller.service`
+* Save the **Buttons** config as: `/etc/systemd/system/kilnbuttons.service`
+* Save the **Watcher** config as: `/etc/systemd/system/kilnwatcher.service`
+* Copy all services to the systemd directory ` sudo cp /home/pi/MetallurgyKiln/services/*.service /etc/systemd/system/`
+
+### 2. Enable and Start
+
+Run the following commands to register the services with the OS and start them:
+
+```bash
+# 1. Reload systemd to recognize new files
+sudo systemctl daemon-reload
+
+# 2. Enable them to start on boot (create symlinks)
+sudo systemctl enable kilncontroller.service
+sudo systemctl enable kilnbuttons.service
+sudo systemctl enable kilnwatcher.service
+
+# 3. Start them manually now
+sudo systemctl start kilncontroller.service
+sudo systemctl start kilnbuttons.service
+sudo systemctl start kilnwatcher.service
+
+
+sudo systemctl daemon-reload
+sudo systemctl restart kilncontroller.service
+sudo systemctl restart kilnbuttons.service
+sudo systemctl restart kilnwatcher.service
+
+```
+
+---
+
+## 🕹️ Management Cheat Sheet
+
+### Checking Status
+
+To see if the services are running, crashed, or pending:
+
+```bash
+# Check the main controller
+sudo systemctl status kilncontroller.service
+
+# Check the helper services
+sudo systemctl status kilnbuttons.service
+sudo systemctl status kilnwatcher.service
+
+```
+
+### Stopping/Restarting
+
+If you push code updates, you generally only need to restart the main controller.
+
+```bash
+# Restart the main app
+sudo systemctl restart kilncontroller.service
+
+# Stop everything (e.g., for hardware maintenance)
+sudo systemctl stop kilnwatcher.service kilnbuttons.service kilncontroller.service
+
+```
+
+### Viewing Logs (Debugging)
+
+If something isn't working, use `journalctl` to view the Python console output.
+
+```bash
+# View live logs for the main controller (Press Ctrl+C to exit)
+sudo journalctl -u kilncontroller.service -f
+
+# View live logs for the watcher
+sudo journalctl -u kilnwatcher.service -f
+
+```
+
+---
+
+## ⚠️ Configuration Notes
+
+1. **Typo Alert:** In the provided configuration for the main controller, the executable is listed as `serer.py`. Please verify if this should be `server.py`. If so, update the `.service` file before installing.
+2. **Sudo Usage:** These services are configured to run as user `pi` but execute python with `sudo`. This grants the scripts root privileges (required for GPIO and SPI access), while keeping the file ownership under the standard user.
+3. **Paths:** Ensure the directory `/home/pi/MetallurgyKiln` exists and contains the required python scripts.

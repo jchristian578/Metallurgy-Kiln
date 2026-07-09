@@ -1,0 +1,19 @@
+{
+  "name": "Temper 205C - Ramp",
+  "meta": {
+    "entryTemp": "C",
+    "entryTime": "min"
+  },
+  "steps": [
+    {
+      "time": 10.0,
+      "temp": 205,
+      "rate": 18.5
+    },
+    {
+      "time": 120.0,
+      "temp": 205,
+      "rate": 0
+    }
+  ]
+}

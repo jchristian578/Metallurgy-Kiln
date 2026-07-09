@@ -1,0 +1,28 @@
+{
+  "name": "Forging 800C 12 Hour",
+  "meta": {
+    "entryTemp": "C",
+    "entryTime": "min"
+  },
+  "steps": [
+    {
+      "time": 720,
+      "temp": 800,
+      "rate": 0
+    }
+  ],
+  "compiled_steps": [
+    {
+      "kind": "ramp",
+      "target_c": 800,
+      "rate_c_per_min": 0,
+      "duration_sec": 0
+    },
+    {
+      "kind": "soak",
+      "target_c": 800,
+      "duration_sec": 43200,
+      "rate_c_per_min": 0
+    }
+  ]
+}
